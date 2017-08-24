@@ -21,7 +21,7 @@ public class Space extends JComponent implements KeyListener, ActionListener {
 	private static final long serialVersionUID = 1L;
 
 	static final int width = 850;
-	static final int height = 800;
+	static final int height = 700;
 	private static final int cols = 11;
 	private static final int rows = 5;
 	private static final int numInvs = cols * rows;
@@ -53,7 +53,8 @@ public class Space extends JComponent implements KeyListener, ActionListener {
 		invader = new Invader[numInvs];
 		
 		for(int x = 0; x < cols; x++) {
-			for(int y = 0; y < rows - 2; y++) {
+			invader[x] = new Invader(ImgType.INV3, x * xSpacing, 0, xSize, ySize, spacepic, 0);
+			for(int y = 1; y < rows - 2; y++) {
 				invader[x + y * cols] = new Invader(ImgType.INV1, x * xSpacing, y * ySpacing, xSize, ySize, spacepic, 0);
 			}
 			for(int y = rows - 2; y < rows; y++) {
@@ -99,7 +100,7 @@ public class Space extends JComponent implements KeyListener, ActionListener {
 			ship.fire();
 		}
 		
-		if(counter % 10 == 0) {
+		if(counter % 75 == 0) {
 			for(int inv = 0; inv < numInvs; inv++) {
 				if(invader[inv].getX() > width - 60 && right) {
 	    				down = true;
@@ -147,7 +148,8 @@ public class Space extends JComponent implements KeyListener, ActionListener {
 	}
 	
 	public void keyTyped(KeyEvent e) {
-		c = e.getKeyChar();
+		
+		/**c = e.getKeyChar();
 		
 		if(c == 's') {
 			movement = 0;
@@ -163,7 +165,7 @@ public class Space extends JComponent implements KeyListener, ActionListener {
 			movement = 3;
 		}
 		repaint();
-		
+		**/
 	}
 
 	public void keyPressed(KeyEvent e) {

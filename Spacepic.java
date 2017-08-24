@@ -26,11 +26,13 @@ public class Spacepic {
 	
 	public Spacepic() throws FileNotFoundException, IOException {
 		
-		this.ship = ImageIO.read(new FileInputStream("images/ship.png"));
-		this.inv1a = ImageIO.read(new FileInputStream("images/inv2a.png"));
-		this.inv1b = ImageIO.read(new FileInputStream("images/inv2b.png"));
-		this.inv2a = ImageIO.read(new FileInputStream("images/inv3a.png"));
-		this.inv2b = ImageIO.read(new FileInputStream("images/inv3b.png"));
+		this.ship = ImageIO.read(new FileInputStream("images/space_invaders/ship.png"));
+		this.inv1a = ImageIO.read(new FileInputStream("images/space_invaders/inv2a.png"));
+		this.inv1b = ImageIO.read(new FileInputStream("images/space_invaders/inv2b.png"));
+		this.inv2a = ImageIO.read(new FileInputStream("images/space_invaders/inv3a.png"));
+		this.inv2b = ImageIO.read(new FileInputStream("images/space_invaders/inv3b.png"));
+		this.inv3a = ImageIO.read(new FileInputStream("images/space_invaders/inv4a.png"));
+		this.inv3b = ImageIO.read(new FileInputStream("images/space_invaders/inv4b.png"));
 	}
 	
 	public Image getImage(ImgType imgType, int frame) {
@@ -50,6 +52,13 @@ public class Spacepic {
 			}
 			else {
 				return inv2a;
+			}
+		case INV3:
+			if(frame == 0) {
+				return inv3a;
+			}
+			else {
+				return inv3b;
 			}
 		}
 		return null;
