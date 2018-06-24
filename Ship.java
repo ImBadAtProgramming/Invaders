@@ -12,7 +12,6 @@ public class Ship {
 	private Spacepic spacepic;
 	private Missile missile;
 	private ImgType imgType;
-	public static int fired = 0;
 	
 	private static boolean moveRight = false;
 	private static boolean moveLeft = false;
@@ -29,7 +28,7 @@ public class Ship {
         g.drawImage(getImage(), x, y, null);
 	}
 	public Image getImage() {	
-		return spacepic.getImage(imgType, 0);
+		return spacepic.getImage(imgType, 0, false);
 	}
 	
 	public static int getX() {
@@ -56,7 +55,6 @@ public class Ship {
 	}
 	public void fire() {
 		System.out.println("You Fired!");
-		fired = 1;
-		
+		Missile.fire(x + 28, y - 35);
 	}
 }

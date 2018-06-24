@@ -43,14 +43,14 @@ public class Spacepic {
 		this.missile = ImageIO.read(new FileInputStream(base + "missile.png"));
 	}
  
-	public Image getImage(ImgType imgType, int frame) {
+	public Image getImage(ImgType imgType, int frame, boolean dead) {
 		switch (imgType) {
 		case MISSILE:
 			return missile;
 		case SHIP:
 			return ship;
 		case INV1:
-			if(Invader.collision) {
+			if(dead) {
 				return invD;
 			}
 			if(frame == 0) {
@@ -60,7 +60,7 @@ public class Spacepic {
 				return inv1b;
 			}
 		case INV2:
-			if(Invader.collision) {
+			if(dead) {
 				return invD;
 			}
 			if(frame == 0) {
@@ -70,7 +70,7 @@ public class Spacepic {
 				return inv2a;
 			}
 		case INV3:
-			if(Invader.collision) {
+			if(dead) {
 				return invD;
 			}
 			if(frame == 0) {

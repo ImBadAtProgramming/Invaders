@@ -78,32 +78,11 @@ public class Space extends JComponent implements KeyListener, ActionListener {
 	public void paintComponent(Graphics g)
     {	
         super.paintComponent(g);   
-        
-        ship.draw(g);
         for(int inv = 0; inv < numInvs; inv++) {
         		invader[inv].draw(g);
-        		if(Ship.fired == 1 || Ship.fired == 2) {
-
-	        		for(extraX = 0; extraX < 34; extraX++) {
-	        			
-	        			if(invader[inv].getX() + extraX == Missile.chooseX()) {
-
-	        				if(invader[inv].getY() == Missile.chooseY()) {
-	        					System.out.println("Collision4");
-	        					invader[inv].collision(inv);
-	        					invader[inv].draw(g);	        					
-	        				}
-	        			}
-	        		}
-        		}
         }
-        if(Ship.fired == 1) {
-        	missile.draw(g);
-        	Ship.fired = Ship.fired + 1;
-        }
-        if(Ship.fired == 2) {
-        	missile.draw(g);
-        }
+    	missile.draw(g);
+        ship.draw(g);
     }
 	
 	public void actionPerformed(ActionEvent e) {
@@ -124,9 +103,7 @@ public class Space extends JComponent implements KeyListener, ActionListener {
 		if(movement == 3) {
 			ship.fire();
 		}
-		if(Ship.fired == 2) {
-			Missile.moveUp();
-		}
+		Missile.moveUp();
 		
 		if(counter % 75 == 0) {
 			for(int inv = 0; inv < numInvs; inv++) {
@@ -145,8 +122,7 @@ public class Space extends JComponent implements KeyListener, ActionListener {
 			if(right) {
 				for(int inv = 0; inv < numInvs; inv++) {
 					invader[inv].cngFrame();
-					invader[inv].moveRight();
-					repaint();				
+					invader[inv].moveRight();				
 				}
 				down = false;
 			}
@@ -154,7 +130,6 @@ public class Space extends JComponent implements KeyListener, ActionListener {
 				for(int inv = 0; inv < numInvs; inv++) {
 					invader[inv].cngFrame();
 					invader[inv].moveLeft();
-					repaint();
 				}
 				down = false;
 			}
@@ -162,7 +137,6 @@ public class Space extends JComponent implements KeyListener, ActionListener {
 				for(int inv = 0; inv < numInvs; inv++) {
 					invader[inv].moveDown();
 					down = false;
-					repaint();
 				}
 				if(!decide) {
 					left = true;
@@ -171,29 +145,22 @@ public class Space extends JComponent implements KeyListener, ActionListener {
 					right = true;
 				}
 			}
+		}				
+		Rectangle missileRectangle = Missile.getRect(); 
+		
+		if (missileRectangle != null) {
+			for(int inv = 0; inv < numInvs; inv++) {
+				Rectangle invaderRectangle = invader[inv].getRect();
+				if (invaderRectangle != null && invaderRectangle.overlap(missileRectangle)) {
+					invader[inv].die(inv);
+				}
+    		}
 		}
 		repaint();
 	}
 	
 	public void keyTyped(KeyEvent e) {
 		
-		/**c = e.getKeyChar();
-		
-		if(c == 's') {
-			movement = 0;
-		}
-		
-		if(c == 'a') {
-			movement = 1;
-		}
-		if(c == 'd') {
-			movement = 2;
-		}
-		if(c == ' ') {
-			movement = 3;
-		}
-		repaint();
-		**/
 	}
 
 	public void keyPressed(KeyEvent e) {

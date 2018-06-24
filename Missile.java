@@ -12,6 +12,7 @@ public class Missile {
 	private static int ySize;
 	private static Spacepic spacepic;
 	private static ImgType imgType;
+	public static boolean active = false;
 	
 	public Missile(ImgType imgType, Spacepic spacepic, int x, int y, int xSize, int ySize) {
 		this.imgType = imgType;
@@ -21,39 +22,37 @@ public class Missile {
 		this.x = x;
 		this.y = y;
 	}
+	public static Rectangle getRect() {
+		if(!active) {
+			return null;
+		}
+		return  new Rectangle(x, y, x + 12, y + 19);
+	}
 	public void draw(Graphics g) {
-        g.drawImage(getImage(), chooseX(), chooseY(), xSize, ySize, null);
+		if(active) {
+			g.drawImage(getImage(), getX(), getY(), xSize, ySize, null);
+		}
 	}
 	public static Image getImage() {	
-		return spacepic.getImage(imgType, 0);
-	}
-	public static int chooseX() {
-		if (Ship.fired == 1) {
-			x = getX();
-			return getX();
-		}
-		return x;
-	}
-	public static int chooseY() {
-		if (Ship.fired == 1) {
-			y = getY();
-			return getY();
-		}
-		return y;
-	}
-	public void setX(int x) {
-		this.x = chooseX();
-	}
-	public void setY(int y) {
-		this.y = y;
+		return spacepic.getImage(imgType, 0, false);
 	}
 	public static int getX() {
-		return Ship.getX() + 28;
+		return x;
 	}
 	public static int getY() {
-		return Ship.getY() - 35;
+		return y;
 	}
 	public static void moveUp() {
-		y = y - 7;
+		if(active) {
+			y = y - 7;
+		}
+	}
+	public static void fire(int X, int Y) {
+		x = X;
+		y = Y;
+		active = true;
+	}
+	public static void die() {
+		active = false;
 	}
 }

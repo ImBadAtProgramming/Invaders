@@ -14,7 +14,8 @@ public class Invader {
 	private int frame;
 	private Spacepic spacepic;
 	private ImgType imgType;
-	public static boolean collision;
+	public boolean dead = false;
+	public boolean active = true;
 	
 	public Invader(ImgType imgType, int x, int y, int xSize, int ySize, Spacepic spacepic, int frame) {
 		this.x = x;
@@ -26,11 +27,6 @@ public class Invader {
 		this.frame = frame = 0;
 	}
 	
-	public void collision(int inv) {
-		collision = true;
-		System.out.println("There has been a collision with invader " + inv);
-	}
-	
 	public void cngFrame() {
 		if(frame == 0) {
 			frame = 1;
@@ -39,7 +35,13 @@ public class Invader {
 			frame = 0;
 		}
 	}
-	
+	public Rectangle getRect() {
+		if(!active) {
+			return null;
+		}
+		return  new Rectangle(x, y, x + 28, y + 35);
+	}
+		
 	public void moveRight() {
 		x = x + Space.xSpacing;
 	}
@@ -59,9 +61,16 @@ public class Invader {
 	public int getY() {
 		return y;
 	}
+	
+	public void die(int inv) {
+		dead = true;
+		System.out.println("There has been a collision with invader " + inv);
+		Missile.die();
+		active = false;
+	}
 
 	public Image getImage() {
-		return spacepic.getImage(imgType, frame);
+		return spacepic.getImage(imgType, frame, dead);
 	}
 
 	public void draw(Graphics g) {
