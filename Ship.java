@@ -7,10 +7,12 @@ import space_invaders.Spacepic.ImgType;
 
 public class Ship {
 
-	private int x;
-	private int y;
+	static int x;
+	static int y;
 	private Spacepic spacepic;
+	private Missile missile;
 	private ImgType imgType;
+	public static int fired = 0;
 	
 	private static boolean moveRight = false;
 	private static boolean moveLeft = false;
@@ -30,8 +32,11 @@ public class Ship {
 		return spacepic.getImage(imgType, 0);
 	}
 	
-	public int getX() {
+	public static int getX() {
 		return x;
+	}
+	public static int getY() {
+		return y;
 	}
 	
 	public void adjustX() {
@@ -50,6 +55,8 @@ public class Ship {
 		x = x - 3;
 	}
 	public void fire() {
-		System.out.print("You Fired!");
+		System.out.println("You Fired!");
+		fired = 1;
+		
 	}
 }

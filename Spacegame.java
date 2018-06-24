@@ -28,11 +28,8 @@ public class Spacegame {
 		// TODO Auto-generated method stub
 		frame = new JFrame("SpaceInv");
 		
-		
-		
 		mainPanel = new JPanel();
-		mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.PAGE_AXIS));
-		
+		mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.PAGE_AXIS));		
 		
 		topPanel = new JPanel(new FlowLayout());
 		mainPanel.add(topPanel);

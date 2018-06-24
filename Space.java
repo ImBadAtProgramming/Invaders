@@ -20,6 +20,7 @@ import space_invaders.Spacepic.ImgType;
 public class Space extends JComponent implements KeyListener, ActionListener {
 	private static final long serialVersionUID = 1L;
 
+	private static int extraX;
 	static final int width = 850;
 	static final int height = 700;
 	private static final int cols = 11;
@@ -30,6 +31,8 @@ public class Space extends JComponent implements KeyListener, ActionListener {
 	static final int ySpacing = 45;
 	private static final int xSize = 33;
 	private static final int ySize = 24;
+	private static final int xSizeM = 12;
+	private static final int ySizeM = 19;
 	
 	private static boolean right = true;
 	private static boolean down = false;
@@ -42,6 +45,7 @@ public class Space extends JComponent implements KeyListener, ActionListener {
 	
 	private Invader[] invader;
 	private Ship ship;
+	private Missile missile;
 	Timer timer;
 	
 	public Space() throws FileNotFoundException, IOException {
@@ -49,6 +53,7 @@ public class Space extends JComponent implements KeyListener, ActionListener {
 		this.setPreferredSize(new Dimension(width, height));
 		
 		ship = new Ship(ImgType.SHIP, spacepic, width / 2 - 35, height - 70);
+		missile = new Missile(ImgType.MISSILE, spacepic, width / 2 - 35, height - 200, xSizeM, ySizeM);
 		
 		invader = new Invader[numInvs];
 		
@@ -75,9 +80,29 @@ public class Space extends JComponent implements KeyListener, ActionListener {
         super.paintComponent(g);   
         
         ship.draw(g);
-        
         for(int inv = 0; inv < numInvs; inv++) {
         		invader[inv].draw(g);
+        		if(Ship.fired == 1 || Ship.fired == 2) {
+
+	        		for(extraX = 0; extraX < 34; extraX++) {
+	        			
+	        			if(invader[inv].getX() + extraX == Missile.chooseX()) {
+
+	        				if(invader[inv].getY() == Missile.chooseY()) {
+	        					System.out.println("Collision4");
+	        					invader[inv].collision(inv);
+	        					invader[inv].draw(g);	        					
+	        				}
+	        			}
+	        		}
+        		}
+        }
+        if(Ship.fired == 1) {
+        	missile.draw(g);
+        	Ship.fired = Ship.fired + 1;
+        }
+        if(Ship.fired == 2) {
+        	missile.draw(g);
         }
     }
 	
@@ -98,6 +123,9 @@ public class Space extends JComponent implements KeyListener, ActionListener {
 		}
 		if(movement == 3) {
 			ship.fire();
+		}
+		if(Ship.fired == 2) {
+			Missile.moveUp();
 		}
 		
 		if(counter % 75 == 0) {

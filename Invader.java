@@ -14,6 +14,7 @@ public class Invader {
 	private int frame;
 	private Spacepic spacepic;
 	private ImgType imgType;
+	public static boolean collision;
 	
 	public Invader(ImgType imgType, int x, int y, int xSize, int ySize, Spacepic spacepic, int frame) {
 		this.x = x;
@@ -23,6 +24,11 @@ public class Invader {
 		this.spacepic = spacepic;
 		this.imgType = imgType;
 		this.frame = frame = 0;
+	}
+	
+	public void collision(int inv) {
+		collision = true;
+		System.out.println("There has been a collision with invader " + inv);
 	}
 	
 	public void cngFrame() {
@@ -55,7 +61,6 @@ public class Invader {
 	}
 
 	public Image getImage() {
-		
 		return spacepic.getImage(imgType, frame);
 	}
 
